@@ -24,6 +24,7 @@ class OneButton:
 
 		self._ONState = ONState
 		self._pullup = pullup
+		self._pinVar = pin
 		
 		self._pressTime = 0
 		self._debounceTime = 30
@@ -90,7 +91,7 @@ class OneButton:
 					
 					# print("longPressStopFuncParam")
 					print(PressTime)
-					self._longPressStopFunc()
+					self._longPressStopFunc(self._pinVar, PressTime)
 					return
 					
 				
@@ -100,7 +101,7 @@ class OneButton:
 
 					#print("clickFuncParam")
 					print(PressTime)
-					self._clickFunc()
+					self._clickFunc(self._pinVar, PressTime)
 					return
 					
 					
