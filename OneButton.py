@@ -29,7 +29,6 @@ class OneButton:
 		self._pressTime = 0
 		self._debounceTime = 30
 		self._longPressTime = 500
-		self._lastHoldTime = 0
 		self._holdTime = 200
 		self._isPressed = False
 		self._isLongPressed = False
@@ -54,7 +53,6 @@ class OneButton:
 		
 	def ticks(self):
 		self._status = None
-		# print("ticks")
 	
 		if self._pin.value() == self._ONState:
 			
@@ -65,51 +63,26 @@ class OneButton:
 			
 			if self._isPressed == True:
 				PressTime = time.ticks_ms() - self._pressTime
-				# print(PressTime)
-				
-				# 持續按下
-				if self._isLongPressed == True and PressTime > self._holdTime:
-					self._lastHoldTime = time.ticks_ms()
-				
 				# 長按
 				if self._isLongPressed == False and PressTime > self._longPressTime:
 					self._isLongPressed = True
 		# 放開按鍵
 		else:
-		
 			if self._isPressed == True:
 				PressTime = time.ticks_ms() - self._pressTime
 			
 				if self._isLongPressed == True :
+					self._isLongPressed = False
 					self._isPressed = False
 					self._pressTime = 0
-					
-					# and self._longPressStopFunc != None:
-					self._isLongPressed = False
-					self._lastHoldTime = 0
-					# self._status = self._longPressStopFunc
-					
-					# print("longPressStopFuncParam")
-					print(PressTime)
 					self._longPressStopFunc(self._pinVar, PressTime)
 					return
-					
 				
 				if self._isLongPressed == False and PressTime > self._debounceTime:
 					self._isPressed = False
 					self._pressTime = 0
-
-					#print("clickFuncParam")
-					print(PressTime)
 					self._clickFunc(self._pinVar, PressTime)
 					return
-					
-					
 			
 			self._pressTime = 0
 			self._isPressed = False
-
-
-
-
-
