@@ -55,11 +55,11 @@ class OneButton:
 		self._status = None
 	
 		if self._pin.value() == self._ONState:
-			
 			# 按下
 			if self._isPressed == False:
 				self._isPressed = True
 				self._pressTime = time.ticks_ms()
+				return
 			
 			if self._isPressed == True:
 				PressTime = time.ticks_ms() - self._pressTime
@@ -86,3 +86,4 @@ class OneButton:
 			
 			self._pressTime = 0
 			self._isPressed = False
+
